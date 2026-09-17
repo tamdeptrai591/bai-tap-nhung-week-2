@@ -1,0 +1,255 @@
+
+Discarded input sections
+
+ .comment       0x00000000       0x47 main.o
+ .comment       0x00000000       0x47 pwm.o
+ .comment       0x00000000       0x47 uart.o
+ .comment       0x00000000       0x47 clock.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+RAM              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD pwm.o
+LOAD uart.o
+LOAD clock.o
+LOAD startup.o
+                0x20005000                        _estack = (ORIGIN (RAM) + LENGTH (RAM))
+
+.text           0x08000000      0x7c8
+                0x08000000                        . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000       0xec startup.o
+ *(.text)
+ .text          0x080000ec      0x25c main.o
+                0x080002bc                USART1_IRQHandler
+                0x08000328                main
+ .text          0x08000348      0x184 pwm.o
+                0x08000348                PWM_Init
+                0x08000408                PWM_SetPercent
+                0x08000450                PWM_On
+                0x08000484                PWM_Off
+                0x080004a4                PWM_GetPercent
+                0x080004b8                PWM_GetState
+ .text          0x080004cc      0x140 uart.o
+                0x080004cc                UART_Init
+                0x08000578                UART_SendChar
+                0x080005a8                UART_SendString
+                0x080005d4                UART_RxReady
+                0x080005f4                UART_ReadChar
+ .text          0x0800060c       0xac clock.o
+                0x0800060c                Clock_Init
+ .text          0x080006b8        0x0 startup.o
+ *(.text*)
+ .text.Reset_Handler
+                0x080006b8       0x44 startup.o
+                0x080006b8                Reset_Handler
+ .text.Default_Handler
+                0x080006fc        0x2 startup.o
+                0x080006fc                EXTI2_IRQHandler
+                0x080006fc                DebugMon_Handler
+                0x080006fc                TIM1_CC_IRQHandler
+                0x080006fc                HardFault_Handler
+                0x080006fc                SysTick_Handler
+                0x080006fc                PVD_IRQHandler
+                0x080006fc                PendSV_Handler
+                0x080006fc                NMI_Handler
+                0x080006fc                EXTI3_IRQHandler
+                0x080006fc                EXTI0_IRQHandler
+                0x080006fc                I2C2_EV_IRQHandler
+                0x080006fc                UsageFault_Handler
+                0x080006fc                ADC1_2_IRQHandler
+                0x080006fc                SPI1_IRQHandler
+                0x080006fc                TAMPER_IRQHandler
+                0x080006fc                DMA1_Channel4_IRQHandler
+                0x080006fc                USART3_IRQHandler
+                0x080006fc                RTC_IRQHandler
+                0x080006fc                DMA1_Channel7_IRQHandler
+                0x080006fc                CAN1_RX1_IRQHandler
+                0x080006fc                TIM4_IRQHandler
+                0x080006fc                I2C1_EV_IRQHandler
+                0x080006fc                DMA1_Channel6_IRQHandler
+                0x080006fc                TIM3_IRQHandler
+                0x080006fc                RCC_IRQHandler
+                0x080006fc                TIM1_TRG_COM_IRQHandler
+                0x080006fc                DMA1_Channel1_IRQHandler
+                0x080006fc                Default_Handler
+                0x080006fc                EXTI15_10_IRQHandler
+                0x080006fc                EXTI9_5_IRQHandler
+                0x080006fc                SPI2_IRQHandler
+                0x080006fc                MemManage_Handler
+                0x080006fc                SVC_Handler
+                0x080006fc                DMA1_Channel5_IRQHandler
+                0x080006fc                EXTI4_IRQHandler
+                0x080006fc                USB_LP_CAN1_RX0_IRQHandler
+                0x080006fc                USB_HP_CAN1_TX_IRQHandler
+                0x080006fc                DMA1_Channel3_IRQHandler
+                0x080006fc                TIM1_UP_IRQHandler
+                0x080006fc                WWDG_IRQHandler
+                0x080006fc                TIM2_IRQHandler
+                0x080006fc                TIM1_BRK_IRQHandler
+                0x080006fc                EXTI1_IRQHandler
+                0x080006fc                RTCAlarm_IRQHandler
+                0x080006fc                USART2_IRQHandler
+                0x080006fc                I2C2_ER_IRQHandler
+                0x080006fc                DMA1_Channel2_IRQHandler
+                0x080006fc                CAN1_SCE_IRQHandler
+                0x080006fc                FLASH_IRQHandler
+                0x080006fc                BusFault_Handler
+                0x080006fc                I2C1_ER_IRQHandler
+                0x080006fc                USBWakeUp_IRQHandler
+ *(.rodata)
+ *fill*         0x080006fe        0x2 
+ .rodata        0x08000700       0xc6 main.o
+ *(.rodata*)
+                0x080007c8                        . = ALIGN (0x4)
+ *fill*         0x080007c6        0x2 
+                0x080007c8                        _etext = .
+                0x080007c8                        _sidata = LOADADDR (.data)
+
+.glue_7         0x080007c8        0x0
+ .glue_7        0x080007c8        0x0 linker stubs
+
+.glue_7t        0x080007c8        0x0
+ .glue_7t       0x080007c8        0x0 linker stubs
+
+.vfp11_veneer   0x080007c8        0x0
+ .vfp11_veneer  0x080007c8        0x0 linker stubs
+
+.v4_bx          0x080007c8        0x0
+ .v4_bx         0x080007c8        0x0 linker stubs
+
+.iplt           0x080007c8        0x0
+ .iplt          0x080007c8        0x0 main.o
+
+.rel.dyn        0x080007c8        0x0
+ .rel.iplt      0x080007c8        0x0 main.o
+
+.data           0x20000000        0x4 load address 0x080007c8
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 main.o
+ .data          0x20000000        0x1 pwm.o
+ .data          0x20000001        0x0 uart.o
+ .data          0x20000001        0x0 clock.o
+ .data          0x20000001        0x0 startup.o
+ *(.data*)
+                0x20000004                        . = ALIGN (0x4)
+ *fill*         0x20000001        0x3 
+                0x20000004                        _edata = .
+
+.igot.plt       0x20000004        0x0 load address 0x080007cc
+ .igot.plt      0x20000004        0x0 main.o
+
+.bss            0x20000004       0x24 load address 0x080007cc
+                0x20000004                        . = ALIGN (0x4)
+                0x20000004                        _sbss = .
+ *(.bss)
+ .bss           0x20000004       0x21 main.o
+ .bss           0x20000025        0x1 pwm.o
+ .bss           0x20000026        0x0 uart.o
+ .bss           0x20000026        0x0 clock.o
+ .bss           0x20000026        0x0 startup.o
+ *(.bss*)
+ *(COMMON)
+                0x20000028                        . = ALIGN (0x4)
+ *fill*         0x20000026        0x2 
+                0x20000028                        _ebss = .
+
+._user_heap_stack
+                0x20000028      0x800 load address 0x080007cc
+                0x20000028                        . = ALIGN (0x8)
+                0x20000428                        . = (. + 0x400)
+ *fill*         0x20000028      0x400 
+                0x20000828                        . = (. + 0x400)
+ *fill*         0x20000428      0x400 
+                0x20000828                        . = ALIGN (0x8)
+
+/DISCARD/
+ *(.note*)
+ *(.comment*)
+OUTPUT(pro.elf elf32-littlearm)
+LOAD linker stubs
+
+.ARM.attributes
+                0x00000000       0x2b
+ .ARM.attributes
+                0x00000000       0x2d main.o
+ .ARM.attributes
+                0x0000002d       0x2d pwm.o
+ .ARM.attributes
+                0x0000005a       0x2d uart.o
+ .ARM.attributes
+                0x00000087       0x2d clock.o
+ .ARM.attributes
+                0x000000b4       0x21 startup.o
+
+.debug_info     0x00000000      0x4ea
+ .debug_info    0x00000000      0x1e6 main.o
+ .debug_info    0x000001e6      0x126 pwm.o
+ .debug_info    0x0000030c      0x11e uart.o
+ .debug_info    0x0000042a       0x90 clock.o
+ .debug_info    0x000004ba       0x30 startup.o
+
+.debug_abbrev   0x00000000      0x356
+ .debug_abbrev  0x00000000      0x156 main.o
+ .debug_abbrev  0x00000156       0xb7 pwm.o
+ .debug_abbrev  0x0000020d       0xcd uart.o
+ .debug_abbrev  0x000002da       0x58 clock.o
+ .debug_abbrev  0x00000332       0x24 startup.o
+
+.debug_aranges  0x00000000       0xa8
+ .debug_aranges
+                0x00000000       0x20 main.o
+ .debug_aranges
+                0x00000020       0x20 pwm.o
+ .debug_aranges
+                0x00000040       0x20 uart.o
+ .debug_aranges
+                0x00000060       0x20 clock.o
+ .debug_aranges
+                0x00000080       0x28 startup.o
+
+.debug_rnglists
+                0x00000000       0x30
+ .debug_rnglists
+                0x00000000       0x17 main.o
+ .debug_rnglists
+                0x00000017       0x19 startup.o
+
+.debug_line     0x00000000      0x677
+ .debug_line    0x00000000      0x235 main.o
+ .debug_line    0x00000235      0x147 pwm.o
+ .debug_line    0x0000037c      0x147 uart.o
+ .debug_line    0x000004c3      0x13a clock.o
+ .debug_line    0x000005fd       0x7a startup.o
+
+.debug_str      0x00000000      0x227
+ .debug_str     0x00000000      0x227 main.o
+                                0x1e1 (size before relaxing)
+ .debug_str     0x00000227        0x0 pwm.o
+                                0x184 (size before relaxing)
+ .debug_str     0x00000227        0x0 uart.o
+                                0x16c (size before relaxing)
+ .debug_str     0x00000227        0x0 clock.o
+                                0x128 (size before relaxing)
+ .debug_str     0x00000227        0x0 startup.o
+                                 0x48 (size before relaxing)
+
+.debug_frame    0x00000000      0x260
+ .debug_frame   0x00000000       0x9c main.o
+ .debug_frame   0x0000009c       0xd8 pwm.o
+ .debug_frame   0x00000174       0xbc uart.o
+ .debug_frame   0x00000230       0x30 clock.o
+
+.debug_line_str
+                0x00000000       0x2c
+ .debug_line_str
+                0x00000000       0x2c startup.o
